@@ -1,0 +1,26 @@
+#!/bin/bash
+
+#Checking to see if Drupal already exists. If it does then won't copy from /usr/src/ otherwise we will.
+
+if [ -e "/var/www/html/sites/default/settings.php" ]; then    
+	echo "Drupal appears to already be installed, no action taken."
+    exit 0
+elif [ -e "/var/www/html/sites/default/default.settings.php" ]; then
+	echo "Drupal appears to already be installed, no action taken."
+    exit 0 
+else
+    tar -xz --strip-components=1 -f /usr/src/drupal.tar.gz -C /var/www/html/
+fi
+
+#Checking if DB ENV set, if they do rename fh_settings.php to settings.php.
+
+declare -a DB_DETAILS=($DRUPAL_DB_HOST $DRUPAL_DB_USER $DRUPAL_DB_NAME $DRUPAL_DB_PASSWORD)
+DB_CHECK="echo ${DB_DETAILS[@]}"
+
+if [ -z "$DB_CHECK" ]; then
+	echo "No database details provided, leaving settings.php."
+    exit 0
+else
+    cp /usr/src/fh_settings.php /var/www/html/sites/default/settings.php
+    echo "Copied DB config over."
+fi

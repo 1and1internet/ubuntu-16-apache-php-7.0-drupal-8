@@ -1,0 +1,23 @@
+version: '2'
+services:
+  drupal:
+    user: "1000000"
+    hostname: drupal
+    build: .
+    image: drupal8
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    links:
+      - mysql
+
+  mysql:
+    user: "1000000"
+    hostname: mysql
+    image: 1and1internet/ubuntu-16-nginx-php-phpmyadmin-mysql-5:latest
+    environment:
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: EnvVarHere 
+      MYSQL_DATABASE: drupal
+      MYSQL_ROOT_PASSWORD: 82LqaSc2V5BT5eyx
