@@ -15,7 +15,10 @@ services:
   mysql:
     user: "1000000"
     hostname: mysql
-    image: 1and1internet/ubuntu-16-nginx-php-phpmyadmin-mysql-5:latest
+    image: 1and1internet/ubuntu-16-nginx-php-phpmyadmin-mariadb-10 
+    ports:
+      - "8081:8080"
+#      - "3306:3306"
     environment:
       MYSQL_USER: drupal
       MYSQL_PASSWORD: EnvVarHere 
